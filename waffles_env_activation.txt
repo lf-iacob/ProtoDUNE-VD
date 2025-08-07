@@ -1,0 +1,26 @@
+(Rischiesto in seguito: aggiornamento di pip alla versione 25.2 con il comando “pip install --upgrade pip”)
+
+Assicurarsi di aver compiuto le azioni seguenti: entrando nel proprio Account CERN, nella pagina di Management
+(https://account.cern.ch/account/), alla voce "Authorization, Resources and CERN Applications"->"Resources
+and Services"->"List Services" devono essere attivate con l'etichetta "Subscribed" le sezioni "LXPLUS and
+Linux", "AFS Workspace" e "EOS/CERBox".
+In "AFS Workspaces"->"Settings" si vada ad ativare il workspace con il tasto apposito e si faccia l'upgrade
+dello spazio, per far sì che si abbia tutto quello messo a disposizione.
+
+Accedere da terminale al proprio Account CERN per passare ad lxplus con il comando
+      ssh ssh liacob@lxplus.cern.ch
+ed inserire, come richiesto, la password del proprio account del CERN.
+
+Si eseguano i comandi a seguire per scaricare waffles ed attivare un environment (qui "NP02_myenv") all'interno.
+			cd /afs/cern.ch/work/l/liacob
+			git clone https://github.com/DUNE/waffles.git
+			cd waffles
+			git checkout -b liacob
+			— torna nella directory waffles —
+			mkdir waffles_analysis
+			cd waffles_analysis
+			mkdir NP02_myenv
+			cd NP02_myenv
+			python3 -m venv /afs/cern.ch/work/l/liacob/NP02_myenv
+			source /afs/cern.ch/work/l/liacob/NP02_myenv/bin/activate
+			pip install -r requirements.txt
