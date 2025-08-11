@@ -16,11 +16,24 @@ Si eseguano i comandi a seguire per scaricare waffles ed attivare un environment
 			git clone https://github.com/DUNE/waffles.git
 			cd waffles
 			git checkout -b liacob
-			— torna nella directory waffles —
+			— torna sopra la directory waffles —
 			mkdir waffles_analysis
 			cd waffles_analysis
-			mkdir NP02_myenv
-			cd NP02_myenv
-			python3 -m venv /afs/cern.ch/work/l/liacob/NP02_myenv
-			source /afs/cern.ch/work/l/liacob/NP02_myenv/bin/activate
+			mkdir waenv
+			cd waenv
+			python3 -m venv /afs/cern.ch/work/l/liacob/waenv
+			source /afs/cern.ch/work/l/liacob/waenv/bin/activate
 			pip install -r requirements.txt
+
+Questa procedura va eseguita la prima volta. Quando si vuole aprire JupyterLab le volte successive, basta che
+			sshlxplus
+			- inserire la password dell'account del CERN -
+			cd $WORK
+			cd waffles_analysis
+			source waenv/bin/activate
+			cd ../waffles
+			runjupyter 1234
+			Ctrl+C #per uscire definitivamente la sessione
+			Crtl+Z #per sospendere, fg #per riprendere la sessione
+
+
