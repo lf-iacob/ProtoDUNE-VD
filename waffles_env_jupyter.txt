@@ -11,7 +11,7 @@ Accedere da terminale al proprio Account CERN per passare ad lxplus con il coman
       ssh ssh liacob@lxplus.cern.ch
 ed inserire, come richiesto, la password del proprio account del CERN.
 
-Si eseguano i comandi a seguire per scaricare waffles ed attivare un environment (qui "NP02_myenv") all'interno.
+Si eseguano i comandi a seguire per scaricare waffles ed attivare un environment (qui "waenv") all'interno.
 			cd /afs/cern.ch/work/l/liacob
 			git clone https://github.com/DUNE/waffles.git
 			cd waffles
