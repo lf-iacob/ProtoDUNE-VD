@@ -252,7 +252,7 @@ def processes_analysis_by_type(wfset, dkey, daqtriggerdict:dict, output_infos, v
             
 
     wfset_onbeam_nonsat = WaveformSet.from_filtered_WaveformSet(wfset, remove_saturated, show_progress=False)
-    runBasicWfAnaNP02(wfset_onbeam_nonsat, threshold=50, onlyoptimal=False, baselinefinish=60, int_ll=60, int_ul=600, amp_ll=60, amp_ul=150, configyaml="", show_progress=verbose)
+    runBasicWfAnaNP02(wfset_onbeam_nonsat, threshold=50, onlyoptimal=True, baselinefinish=60, int_ll=60, int_ul=600, amp_ll=60, amp_ul=150, configyaml="", show_progress=verbose)
 
     chwfob_ns = ChannelWsGrid.clusterize_waveform_set(wfset_onbeam_nonsat)
     list_of_devices = sorted([ m for m in dict_module_to_uniqch.keys() if m ])
