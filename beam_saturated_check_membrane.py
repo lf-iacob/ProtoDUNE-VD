@@ -252,7 +252,7 @@ def processes_analysis_by_type(wfset, dkey, daqtriggerdict:dict, output_infos, v
             
 
     wfset_onbeam_nonsat = WaveformSet.from_filtered_WaveformSet(wfset, remove_saturated, show_progress=False)
-    runBasicWfAnaNP02(wfset_onbeam_nonsat, onlyoptimal=True, baselinefinish=60, int_ll=60, int_ul=600, amp_ll=60, amp_ul=150, configyaml="", show_progress=verbose)
+    runBasicWfAnaNP02(wfset_onbeam_nonsat, threshold=50, onlyoptimal=False, baselinefinish=60, int_ll=60, int_ul=600, amp_ll=60, amp_ul=150, configyaml="", show_progress=verbose)
 
     chwfob_ns = ChannelWsGrid.clusterize_waveform_set(wfset_onbeam_nonsat)
     list_of_devices = sorted([ m for m in dict_module_to_uniqch.keys() if m ])
@@ -271,8 +271,9 @@ def processes_analysis_by_type(wfset, dkey, daqtriggerdict:dict, output_infos, v
                 nbeamrecors_ch_triggered_nosat[ch] = recordschob
                 if len(wfsch[ch].waveforms) != recordschob:
                     raise ValueError("This should never happen...")
-                charges = [ wf.analyses['std'].result['integral'] for wf in chwfob_ns[endpoint][ch].waveforms ]
-                meancharge = np.nanmean(charges)
+                charges = [ wf.analyses['std'].result['integral'] for wf in chwfob_ns[endpoint][ch].waveforms if not wf.analyses['std'].result['integral'] is np.nan ]
+                if len(charges) > 0:
+                    meancharge = np.nanmean(charges)
             if verbose:
                 nperc = 0 if nbeamrecors_ch_triggered[ch] ==0 else 100*nbeamrecors_ch_triggered_nosat[ch]/nbeamrecors_ch_triggered[ch]
                 print(f"{dict_uniqch_to_module[str(UniqueChannel(ep,ch))]}, {nbeamrecors_ch_triggered_nosat[ch]}, {nbeamrecors_ch_triggered[ch]}, {nperc:.2f}%")
