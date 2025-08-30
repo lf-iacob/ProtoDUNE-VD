@@ -1,0 +1,33 @@
+# Runs to be analyzed
+runs : [30129]
+
+# File.csv with an OfflineCh <-> RMS mapping for a given ---- VGain and Integrators ON/OFF configuration
+noise_results_file : "/eos/home-f/fegalizz/ProtoDUNE_HD/Noise_Studies/analysis/Configs/Config_VGain2394_IntOFF/OfflineCh_RMS_Config.csv"
+#File.csv with the calibration results 
+calibration_file : "/eos/home-f/fegalizz/ProtoDUNE_HD/TimeResolution/analysis/TimeResolutionCalib_Run_30127.csv"
+
+
+#Canali scritti come endpoint+channel_number
+channels  : [11130, 11132, 11146, 11144, 11143, 11113, 11114, 
+               11112, 11123, 11124, 11147, 11145, 11120, 11125,
+               11225, 11223, 11221, 11235, 11231, 11247]
+
+
+#Altre info necessarie per la time resolution, tra cui range di integrazione
+prepulse_ticks : 125
+postpulse_ticks : 155
+int_low : 130
+int_up : 155
+
+#Numero minimo di fotoelettroni
+min_pes : 5
+
+methods : ["amplitude", "integral", "denoise"]
+
+relative_thrs : [0.5]
+
+filt_levels : [8, 12]
+
+h2_nbins  : 100  #CREDO sia la risoluzione in "pixel" del persistence plot (FORSE)
+stat_lost : 0.005
+
