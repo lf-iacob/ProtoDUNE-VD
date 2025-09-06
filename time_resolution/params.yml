@@ -9,7 +9,7 @@ dettype : "cathode"
 #dettype : "membrane"
 
 
-''' Runs to be analyzed '''
+#-------------------- Runs to be analyzed --------------------
 # # ----Mask1----
 # runs : [39032]
 # channels : [10632, 10633] #cathode
@@ -35,7 +35,7 @@ dettype : "cathode"
 # channels : [10707, 10700, 10727, 10720, 10737, 10730] #membrane
 
 
-''' Parameters '''
+#-------------------- Parameters --------------------
 nwaveforms : null
 
 prepulse_ticks : 250
