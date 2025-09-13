@@ -97,12 +97,18 @@ dal secondo tick, allora questo assume il valore di 2).
 
 
 # Plot di waveform (Lez Enrique - Giorno4)
-Plot di una singola waveform dell'intero set.
-plt.plot(wf.adcs)
-plt.xlabel('ticks (timestamp)')
-plt.ylabel('ADCs (AU)')
-plt.title('Waveform (index={:}/{:})'.format(m, n))
+run=wf.run_number
+m=5
+mylist=wfset.waveforms
+n=len(mylist)
 
+Plot di una singola waveform dell'intero set.
+plt.figure(figsize=([9,6]))
+plt.plot(wf.adcs)
+plt.grid(color='lightgrey')
+plt.xlabel('Time [ticks]')
+plt.ylabel('Amplitude [ADCs]')
+plt.title('RUN = {:} - Waveform {:} of {:}'.format(run, m, n))
 
 Plot delle prime 100 singole waveforms del set.
 Da qui verrà l'idea di fare una HeatMap o Persistence Map, andando a costruire una griglia sulle coordinate x e y
@@ -116,5 +122,10 @@ plt.title('Waveform (index=0:50/{:})'.format(n))
 
 
 Plot di tutte le singole waveforms del set.
+plt.figure(figsize=([9,6]))
 for i in range(0, n-1):
-    plt.plot(mylist[i].adcs)
+    plt.plot(mylist[i].adcs, linewidth=0.7)
+plt.grid(color='lightgrey')
+plt.xlabel('Time [ticks]')
+plt.ylabel('Amplitude [ADCs]')
+plt.title('RUN = {:} - Waveforms (80000)'.format(run, m, n))
