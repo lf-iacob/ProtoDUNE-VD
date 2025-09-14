@@ -219,7 +219,7 @@ def subhist(coord, dz_part, part_type, colors, **kwargs):
 
     #bars
     ax.bar3d(x, y, z, dx, dy, dz_part, color=colors, alpha=0.8, shade=True, zorder=9)
-    #(non-tco)
+    #(non)-tco
     ax.scatter(0, np.arange(-8*yd, 14*yd, yd), marker='.', color='black', zorder=8)
     ax.text(-3, -5, 0, "NON-TCO", va='center', fontweight='bold', zorder=20)
     ax.scatter(7.5, np.arange(-8*yd, 14*yd, yd), marker='.', color='black', zorder=8)
@@ -268,10 +268,12 @@ def subhist(coord, dz_part, part_type, colors, **kwargs):
         zz=zp+0.1405*t
         ax.plot(xx, yy, zz, color='red', zorder=11)
         ax.scatter(xp, yp, zp, color='red') #beam enters the detector
-        
+        #detector shape
+        ax.scatter(np.arange(-6*xd, 17*yd, xd), 0*yd, marker='.', color='black', zorder=18)
+        ax.scatter(np.arange(-6*xd, 17*xd, xd), 4*yd, marker='.', color='black', zorder=18)
+            
     for xi, yi, zi, label in zip(x, y, dz_part, modules):
             ax.text(xi + dx/2, yi + dy/2,  zi + max(dz_part)*0.1, label, ha='center', va='bottom', fontsize=9, fontweight='bold', zorder=19)
-
 
 
 
