@@ -2,7 +2,12 @@
 
 import matplotlib.pyplot as plt
 from waffles.input_output.hdf5_structured import load_structured_waveformset
-wfset = load_structured_waveformset("/eos/experiment/neutplatform/protodune/experiments/ProtoDUNE-VD/commissioning/processed/run038584_membrane/processed_np02vd_raw_run038584_0000_df-s04-d0_dw_0_20250805T125414.hdf5.copied_structured_membrane.hdf5", max_to_load=80000)
+
+wfset = load_structured_waveformset("/eos/experiment/neutplatform/protodune/experiments/ProtoDUNE-VD/commissioning/processed/run039105_cathode/processed_np02vd_raw_run039105_0000_df-s05-d0_dw_0_20250824T210850.hdf5.copied_structured_cathode.hdf5", max_to_load=80000)
+#wfset = load_structured_waveformset("/eos/experiment/neutplatform/protodune/experiments/ProtoDUNE-VD/commissioning/processed/run038648_membrane/processed_np02vd_raw_run038648_0000_df-s05-d0_dw_0_20250811T171107.hdf5.copied_structured_membrane.hdf5", max_to_load=80000)
+#wfset = load_structured_waveformset("/eos/experiment/neutplatform/protodune/experiments/ProtoDUNE-VD/commissioning/processed/run038584_membrane/processed_np02vd_raw_run038584_0000_df-s04-d0_dw_0_20250805T125414.hdf5.copied_structured_membrane.hdf5", max_to_load=80000)
+#wfset = load_structured_waveformset("/eos/experiment/neutplatform/protodune/experiments/ProtoDUNE-VD/commissioning/processed/run039105_membrane/processed_np02vd_raw_run039105_0000_df-s05-d0_dw_0_20250824T210850.hdf5.copied_structured_membrane.hdf5", max_to_load=80000)
+
 wfset
 wf = wfset.waveforms[5]
 wf
@@ -103,25 +108,35 @@ mylist=wfset.waveforms
 n=len(mylist)
 
 Plot di una singola waveform dell'intero set.
+#Plot - RUN 38584
+listaa=[7, 10]
+l=len(listaa)
 plt.figure(figsize=([9,6]))
-plt.plot(wf.adcs)
+for i in listaa:
+    wf_prova = wfset.waveforms[i]
+    plt.plot(wf_prova.adcs)
 plt.grid(color='lightgrey')
 plt.xlabel('Time [ticks]')
 plt.ylabel('Amplitude [ADCs]')
-plt.title('RUN = {:} - Waveform {:} of {:}'.format(run, m, n))
+plt.title('RUN = {:} - {:} of {:} waveforms'.format(run, l, n))
+#Scatter
+listaa=[7, 10]
+tempo = np.arange(0, 1024)
+print(tempo)
+l=len(listaa)
+plt.figure(figsize=([9,6]))
+for i in listaa:
+    wf_prova = wfset.waveforms[i]
+    plt.scatter(tempo, wf_prova.adcs, marker='.')
+plt.grid(color='lightgrey')
+plt.xlabel('Time [ticks]')
+plt.ylabel('Amplitude [ADCs]')
+plt.title('RUN = {:} - {:} of {:} waveforms'.format(run, l, n))
 
-Plot delle prime 100 singole waveforms del set.
+Plot di tutte le singole waveforms del wfset
 Da qui verrà l'idea di fare una HeatMap o Persistence Map, andando a costruire una griglia sulle coordinate x e y
 per poi applicare per ogni singolo "pixel" (per cui la griglia fa sì che si abbia più o meno una certa sensibilità)
 un conteggio a mo' di istogramma.
-for i in range(0, 100):
-    plt.plot(mylist[i].adcs)
-plt.xlabel('ticks (timestamp)')
-plt.ylabel('ADCs (AU)')
-plt.title('Waveform (index=0:50/{:})'.format(n))
-
-
-Plot di tutte le singole waveforms del set.
 plt.figure(figsize=([9,6]))
 for i in range(0, n-1):
     plt.plot(mylist[i].adcs, linewidth=0.7)
@@ -129,3 +144,119 @@ plt.grid(color='lightgrey')
 plt.xlabel('Time [ticks]')
 plt.ylabel('Amplitude [ADCs]')
 plt.title('RUN = {:} - Waveforms (80000)'.format(run, m, n))
+
+
+
+
+Tesi - Grafici per vedere curve di eventi ad alta energia
+#Plot per viasualizzazione evento ad alta energia - RUN 38648
+listaa=[82,80, 1740]
+colors=['crimson', 'teal', 'black']
+l=len(listaa)
+plt.figure(figsize=([10,6]))
+for i in range(0,l):
+    j=listaa[i]
+    wf_prova = wfset.waveforms[j]
+    plt.plot(wf_prova.adcs, label=j, color=colors[i], linewidth=3)
+plt.grid(color='lightgrey')
+plt.xlabel('Time [ticks]')
+plt.ylabel('Amplitude [ADCs]')
+plt.legend(title='Wf index')
+plt.title('RUN = {:} - {:} of {:} waveforms'.format(run, l, n))
+
+
+Tesi - Grafici per studiare la baseline
+#Plot per metodo baseline - RUN 38648
+listaa=[3, 59, 55, 103, 196]
+colors=['royalblue', 'forestgreen', 'plum', 'mediumvioletred', 'lightcoral']
+#listaa=[55, 196]
+l=len(listaa)
+plt.figure(figsize=([9.5,6]))
+for j in range(0, l):
+    i=listaa[j]
+    wf_prova = wfset.waveforms[i]
+    plt.plot(wf_prova.adcs, label=i, color=colors[j])
+    #plt.plot(wf_prova.adcs, color='crimson') # darkred o crimson belli rossi
+plt.grid(color='lightgrey')
+plt.xlabel('Time [ticks]')
+plt.ylabel('Amplitude [ADCs]')
+plt.legend(title='Wf index')
+plt.ylim(1460, 4100)
+plt.title('RUN = {:} - {:} of {:} waveforms'.format(run, l, n))
+
+#Plot per metodo baseline - RUN 38648
+fig, ax = plt.subplots(figsize=(9.5, 6))
+index=3
+wf_prova = wfset.waveforms[index]
+signal=wf_prova.adcs
+plt.plot(signal, label=index, color='darkorchid')
+plt.xlabel('Time [ticks]')
+plt.ylabel('Amplitude [ADCs]')
+plt.legend(title='Wf index', loc='upper left')
+plt.grid(color='lightgrey')
+plt.title('RUN = {:} - Wf {:} of {:}'.format(run, index, n))
+plt.ylim(1610, 2500)
+ins_ax=ax.inset_axes([0.54,0.59,0.44,0.39])
+ins_ax.plot(wf_prova.adcs, color='darkorchid')
+ins_ax.set_ylim(1630, 1700)
+ins_ax.set_xlim(-15,80)
+ins_ax.grid(color='lightgrey')
+
+#Selezionamento del range per la baseline - RUN 39105
+index=13
+wf_prova = wfset.waveforms[index]
+signal=wf_prova.adcs
+ran=3500
+baseline_range=signal[0:ran]
+time=np.arange(0,ran)
+fig, ax = plt.subplots(figsize=(9, 6))
+plt.plot(baseline_range, label=index, color='crimson')
+plt.xlabel('Time [ticks]')
+plt.ylabel('Amplitude [ADCs]')
+plt.legend(title='Wf index', loc='upper left')
+plt.grid(color='lightgrey')
+plt.title('RUN = {:} - Wf {:} of {:}'.format(run, index, n))
+
+
+#Selezionamento del range per la baseline - RUN 39105
+index=13
+wf_prova = wfset.waveforms[index]
+signal=wf_prova.adcs
+ran=1800
+baseline_range=signal[0:ran]
+time=np.arange(0,ran)
+fig, ax = plt.subplots(figsize=(10, 6))
+plt.plot(baseline_range, label=index, color='crimson')
+plt.scatter(time, baseline_range, color='crimson', marker='.')
+plt.xlabel('Time [ticks]')
+plt.ylabel('Amplitude [ADCs]')
+plt.legend(title='Wf index', loc='upper left')
+plt.grid(color='lightgrey')
+plt.title('RUN = {:} - Wf {:} of {:}'.format(run, index, n))
+
+# Costruzione dell'istogramma
+n_bins=27
+fig, ax = plt.subplots(figsize=(6, 3))
+plt.hist(baseline_range, bins=n_bins, color='crimson', alpha=0.7)
+plt.ylabel('Counts')
+plt.xlabel('Amplitude [ADCs]')
+plt.grid(color='lightgrey')
+plt.title('Histogram baseline')
+
+# Cerco di metterli insieme
+fig, ax = plt.subplots(figsize=(9, 6))
+plt.plot(baseline_range, label=index, color='crimson')
+plt.scatter(time, baseline_range, color='crimson', marker='.')
+plt.xlabel('Time [ticks]')
+plt.grid(color='lightgrey')
+plt.title('RUN = {:} - Wf {:} of {:}'.format(run, index, n))
+plt.gca().set_yticklabels([])
+ins_ax=ax.inset_axes([-0.3,0,0.27,1])
+ins_ax.invert_xaxis()
+counts, bins = np.histogram(baseline_range, bins=n_bins)
+bin_centers = 0.5 * (bins[:-1] + bins[1:])
+ins_ax.barh(bin_centers, counts, height=np.diff(bins), color='crimson', alpha=0.7)
+ins_ax.set_ylabel('Amplitude [ADCs]')
+ins_ax.set_xlabel('Counts')
+ins_ax.grid(color='lightgrey')
+ins_ax.set_title('Histogram baseline')
