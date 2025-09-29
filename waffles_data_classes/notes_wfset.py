@@ -348,3 +348,58 @@ ins_ax.plot(x_r, y_r, color='darkviolet', linewidth=3)
 ins_ax.set_ylim(2700, 5050)
 ins_ax.set_xlim(247, 266)
 ins_ax.grid(color='lightgrey')
+
+
+#Plot for time resolution "amplitufe" methode riscalata la baseline a 0- RUN 39033
+listaa=[76]
+l=len(listaa)
+time=np.arange(0, 1024)
+fig, ax = plt.subplots(figsize=(9, 6))
+for i in listaa:
+    wf_prova = wfset.waveforms[i]
+    y=wf_prova.adcs
+    baseline=int(min(y))
+    yy=y-baseline
+    plt.plot(yy, label=i, color='teal')
+#punti per metodo amplitude
+index_max=np.argmax(y)
+maximum=max(yy)
+index_min=time[250]
+minimum=yy[250]
+semi_ampl=maximum/2
+index_sup_ampl=255
+index_inf_ampl=254
+sup_ampl=yy[index_sup_ampl]
+inf_ampl=yy[index_inf_ampl]
+#retta di fit
+m=(sup_ampl-inf_ampl)/(index_sup_ampl-index_inf_ampl)
+x_r=np.arange(250, 260, 0.05)
+y_r=m*(x_r-index_sup_ampl)+sup_ampl
+
+
+plt.grid(color='lightgrey')
+plt.xlabel('Time [ticks]', fontsize=13)
+plt.ylabel('Amplitude [ADCs]', fontsize=13)
+plt.legend(title='Wf index', loc='upper left')
+plt.title('RUN = {:} - {:} of {:} waveforms'.format(run, l, n))
+ins_ax=ax.inset_axes([1.08,0,0.65,1])
+ins_ax.scatter(time, yy, color='teal', marker='.', s=200, zorder=5)
+ins_ax.plot(yy, color='teal', linewidth=1, zorder=4)
+ins_ax.scatter(index_max, maximum, color='red', marker='.', s=200, zorder=6) #max_wf_pick
+ins_ax.scatter(index_min, minimum, color='red', marker='.', s=200, zorder=7) #min_wf_pick
+ins_ax.scatter(time, np.full(1024, semi_ampl), marker='_', color='black', s=20)
+ins_ax.scatter(index_sup_ampl, sup_ampl, color='white', s=250, zorder=-1) 
+ins_ax.scatter(index_inf_ampl, inf_ampl, color='white', s=250, zorder=-2) 
+ins_ax.scatter(index_sup_ampl, sup_ampl, color='red', s=500, zorder=-3) 
+ins_ax.scatter(index_inf_ampl, inf_ampl, color='red', s=500, zorder=-4) 
+ins_ax.text(251.4, 4100-baseline, 'sup', va='center', fontsize=13)
+ins_ax.text(251, 3650-baseline, 'inf', va='center', fontsize=13)
+ins_ax.text(261, 4900-baseline, 'max', va='center', fontsize=13)
+ins_ax.text(248, 3000-baseline, 'min', va='center', fontsize=13)
+ins_ax.text(259.5, 4000-baseline, 'semi_ampl', va='center', fontsize=12)
+ins_ax.text(253, 2850-baseline, 'linear_fit', va='center', fontsize=13)
+ins_ax.plot(x_r, y_r, color='darkviolet', linewidth=3)
+ins_ax.set_xlabel('Time [ticks]', fontsize=13)
+ins_ax.set_ylim(2700-baseline, 5050-baseline)
+ins_ax.set_xlim(247, 266)
+ins_ax.grid(color='lightgrey')
