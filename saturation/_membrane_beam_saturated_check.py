@@ -14,15 +14,7 @@ plt.rcParams.update({'font.size': 20,
                         'figure.autolayout': True,
                         'figure.figsize': [14,6]
                         })
-
-import waffles
-import numpy as np
-import json
-import shutil 
-from tqdm import tqdm
-
-from pathlib import Path
-
+from pathlib import Pat
 from waffles.input_output.hdf5_structured import load_structured_waveformset
 from waffles.data_classes.Waveform import Waveform
 from waffles.data_classes.WaveformSet import WaveformSet
