@@ -27,16 +27,7 @@ from waffles.np02_utils.AutoMap import generate_ChannelMap, dict_uniqch_to_modul
 from waffles.np02_utils.PlotUtils import np02_gen_grids, plot_grid, plot_detectors, genhist, fithist, runBasicWfAnaNP02
 
 
-
-
-
-
-
-
-
-
 dettype = "membrane"
-
 
 ## Only change if necessary
 datadir = f"/eos/experiment/neutplatform/protodune/experiments/ProtoDUNE-VD/commissioning/"
@@ -52,9 +43,6 @@ group4 = [ f"{dletter}{detnum}({chnum})" for detnum in range(7, 9) for chnum in 
 groupall = group1+group2+group3+group4
 
 list_of_unch = ordered_channels_membrane
-
-
-
 
 
 
