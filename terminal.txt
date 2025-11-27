@@ -1,0 +1,14 @@
+Comandi per accedere al jupyter notebook dal terminale con account CERN liacob
+
+--> da terminale -->
+sshlxplus
+>> inserisci password
+>> inserisci 2nd factor
+cd $WORK
+cd waffles_analysis
+source waenv/bin/activate
+cd ..
+runjupyter 1234
+
+--> sul browser -->
+http://127.0.0.1:62336/lab?token=1234
